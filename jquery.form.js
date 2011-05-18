@@ -456,7 +456,9 @@ $.fn.ajaxSubmit = function(options) {
 		};
 
 		var httpData = function( xhr, type, s ) { // mostly lifted from jq1.4.4
-
+		    if($.ajaxSettings.disable_form_data_processing){
+			return null;
+		    }else{
 			var ct = xhr.getResponseHeader('content-type') || '',
 				xml = type === 'xml' || !type && ct.indexOf('xml') >= 0,
 				data = xml ? xhr.responseXML : xhr.responseText;
@@ -475,6 +477,7 @@ $.fn.ajaxSubmit = function(options) {
 				}
 			}
 			return data;
+		    }
 		};
 	}
 };
